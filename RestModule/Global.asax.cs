@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using ApiKeyDemo.MessageHandler;
 using System.Web.Http;
-using System.Web.Routing;
 
 namespace RestModule
 {
@@ -12,6 +8,7 @@ namespace RestModule
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiKeyMessageHandler());
         }
     }
 }
