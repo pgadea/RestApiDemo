@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Microsoft.Web.Http.Versioning;
 
 namespace RestModule
 {
@@ -10,10 +8,17 @@ namespace RestModule
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            config.AddApiVersioning();
             // Web API routes
-            config.MapHttpAttributeRoutes();
 
+            config.AddApiVersioning(options =>
+            {
+                options.ApiVersionReader = new MediaTypeApiVersionReader();
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionSelector = new CurrentImplementationApiVersionSelector(options);
+            });
+
+            config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
